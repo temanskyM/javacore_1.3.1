@@ -7,112 +7,72 @@ public class Main {
         System.out.println("Working Directory = " + System.getProperty("user.dir"));
 
         //Создаем папку Games
-        File mainDir = new File(System.getProperty("user.dir") + "//Games");
-
-        if (mainDir.mkdir()) System.out.println("Каталог Games создан");
-        else System.out.println("Каталог Games уже существует");
+        File mainDir = createDir(System.getProperty("user.dir"), "Games");
 
         gamesDirFill(mainDir.getPath());
     }
 
     private static void gamesDirFill(String path) {
-        File srcDir = new File(path + "//src");
-        if (srcDir.mkdir()) System.out.println("Каталог src создан");
-        else System.out.println("Каталог src уже существует");
-
-        File resDir = new File(path + "//res");
-        if (resDir.mkdir()) System.out.println("Каталог res создан");
-        else System.out.println("Каталог res уже существует");
-
-        File saveGamesDir = new File(path + "//savegames");
-        if (saveGamesDir.mkdir()) System.out.println("Каталог savegames создан");
-        else System.out.println("Каталог savegames уже существует");
-
-        File tempDir = new File(path + "//temp");
-        if (tempDir.mkdir()) System.out.println("Каталог temp создан");
-        else System.out.println("Каталог temp уже существует");
+        File srcDir = createDir(path, "src");
+        File resDir = createDir(path, "res");
+        File saveGamesDir = createDir(path, "savegames");
+        File tempDir = createDir(path, "temp");
 
         srcDirFill(srcDir.getPath());
         resDirFill(resDir.getPath());
         tempDirFill(tempDir.getPath());
-
     }
 
     private static void srcDirFill(String path) {
-        File mainDir = new File(path + "//main");
-        if (mainDir.mkdir()) System.out.println("Каталог main создан");
-        else System.out.println("Каталог main уже существует");
-
-        File testDir = new File(path + "//test");
-        if (testDir.mkdir()) System.out.println("Каталог test создан");
-        else System.out.println("Каталог test уже существует");
+        File mainDir = createDir(path, "main");
+        File testDir = createDir(path, "test");
 
         mainDirFill(mainDir.getPath());
     }
 
     private static void mainDirFill(String path) {
-        File mainJavaFile = new File(path + "//Main.java");
-        try {
-            if (mainJavaFile.exists()) {
-                System.out.println("Файл Main.java существует");
-            }
-            else{
-                if (mainJavaFile.createNewFile())
-                    System.out.println("Файл Main.java был создан");
-                else
-                    System.out.println("Невозможно создать файл Main.java");
-            }
-        } catch (IOException ex) {
-            System.out.println("Невозможно создать файл Main.java");
-            //ex.printStackTrace();
-        }
+        File mainFile = createFile(path,"Main.java");
+        File utilsFile = createFile(path,"Utils.java");
 
-        File utilsJavaFile = new File(path + "//Utils.java");
-        try {
-            if (utilsJavaFile.exists()) {
-                System.out.println("Файл Utils.java существует");
-            }
-            else{
-                if (utilsJavaFile.createNewFile())
-                    System.out.println("Файл Utils.java был создан");
-                else
-                    System.out.println("Невозможно создать файл Utils.java");
-            }
-        } catch (IOException ex) {
-            System.out.println("Невозможно создать файл Utils.java");
-            //ex.printStackTrace();
-        }
     }
 
     private static void resDirFill(String path) {
-        File mainDir = new File(path + "//drawables");
-        if (mainDir.mkdir()) System.out.println("Каталог drawables создан");
-        else System.out.println("Каталог drawables уже существует");
-
-        File testDir = new File(path + "//vectors");
-        if (testDir.mkdir()) System.out.println("Каталог vectors создан");
-        else System.out.println("Каталог vectors уже существует");
-
-        File iconsDir = new File(path + "//icons");
-        if (iconsDir.mkdir()) System.out.println("Каталог icons создан");
-        else System.out.println("Каталог icons уже существует");
+        File drawablesDir = createDir(path, "drawables");
+        File testDir = createDir(path, "vectors");
+        File iconsDir = createDir(path, "icons");
     }
 
     private static void tempDirFill(String path) {
-        File tempFile = new File(path + "//temp.txt");
+        File tempFile = createFile(path,"temp.txt");
+    }
+
+    private static File createDir(String path, String nameDir) {
+        String fullPath = path + File.pathSeparator + nameDir;
+
+        File dir = new File(fullPath);
+        if (dir.mkdir()) System.out.println("Каталог " + nameDir + " создан");
+        else System.out.println("Каталог " + nameDir + " уже существует");
+
+        return dir;
+    }
+    private static File createFile(String path, String nameFile) {
+        String fullPath = path + File.pathSeparator + nameFile;
+
+        File file = new File(fullPath);
         try {
-            if (tempFile.exists()) {
-                System.out.println("Файл temp.txt существует");
-            }
-            else{
-                if (tempFile.createNewFile())
-                    System.out.println("Файл temp.txt был создан");
+            if (file.exists()) {
+                System.out.println("Файл " + nameFile + " существует");
+            } else {
+                if (file.createNewFile())
+                    System.out.println("Файл " + nameFile + " был создан");
                 else
-                    System.out.println("Невозможно создать файл temp.txt");
+                    System.out.println("Невозможно создать файл " + nameFile);
             }
         } catch (IOException ex) {
-            System.out.println("Невозможно создать файл temp.txt");
+            System.out.println("Невозможно создать файл " + nameFile);
             //ex.printStackTrace();
         }
+
+        return file;
     }
 }

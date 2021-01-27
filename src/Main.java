@@ -47,7 +47,7 @@ public class Main {
     }
 
     private static File createDir(String path, String nameDir) {
-        String fullPath = path + File.pathSeparator + nameDir;
+        String fullPath = path + File.separator + nameDir;
 
         File dir = new File(fullPath);
         if (dir.mkdir()) System.out.println("Каталог " + nameDir + " создан");
@@ -56,7 +56,7 @@ public class Main {
         return dir;
     }
     private static File createFile(String path, String nameFile) {
-        String fullPath = path + File.pathSeparator + nameFile;
+        String fullPath = path + File.separator + nameFile;
 
         File file = new File(fullPath);
         try {
